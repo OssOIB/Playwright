@@ -7,10 +7,6 @@ dotenv.config({ path: './auth.env', override: true }); // `override: true` force
 const username = process.env.USERNAME;
 const password = process.env.PASSWORD;
 
-// Vérifier que les identifiants sont correctement chargés
-if (!username || !password) {
-  throw new Error('Les informations USERNAME ou PASSWORD sont manquantes dans auth.env');
-}
 
 test('Test de connexion sécurisé', async ({ page }) => {
   // Naviguer vers la page de connexion
