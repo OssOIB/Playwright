@@ -1,27 +1,36 @@
 name: Playwright Tests
+
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - main # Exécute les tests sur chaque commit dans la branche "main"
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - main # Exécute les tests pour chaque pull request vers "main"
+
 jobs:
   test:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      # Étape 1 : Vérifier le code du dépôt
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Étape 2 : Configurer Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Assurez-vous d'utiliser une version compatible avec Playwright
+
+      # Étape 3 : Installer les dépendances
+      - name: Install dependencies
+        run: npm install
+
+      # Étape 4 : Installer les navigateurs Playwright
+      - name: Install Playwright Browsers
+        run: npx playwright install
+
+      # Étape 5 : Exécuter les tests Playwright
+      - name: Run Playwright Tests
+        run: npx playwright test
