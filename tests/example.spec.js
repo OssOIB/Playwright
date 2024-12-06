@@ -1,20 +1,13 @@
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
 
-// Charger les variables d'environnement depuis le fichier auth.env
-dotenv.config({ path: './auth.env', override: true }); // `override: true` force l'écrasement des variables système
-
-const username = process.env.USERNAME;
-const password = process.env.PASSWORD;
-
-
 test('Test de connexion sécurisé', async ({ page }) => {
   // Naviguer vers la page de connexion
   await page.goto('https://practicetestautomation.com/practice-test-login/');
 
-  // Saisir le nom d'utilisateur et le mot de passe
-  await page.getByLabel('Username').fill(username);
-  await page.getByLabel('Password').fill(password);
+
+  await page.getByLabel('Username').fill('student');
+  await page.getByLabel('Password').fill('Password123');
 
   // Cliquer sur "Submit"
   await page.getByRole('button', { name: 'Submit' }).click();
